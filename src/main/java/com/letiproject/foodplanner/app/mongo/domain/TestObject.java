@@ -1,4 +1,4 @@
-package com.letiproject.foodplanner.app.domain;
+package com.letiproject.foodplanner.app.mongo.domain;
 
 
 import org.springframework.data.annotation.Id;
