@@ -1,0 +1,475 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+body{
+    background-color: #f2f2f2;
+    font-family: "Lato";
+    font-weight: 300;
+    font-size: 16px;
+    color: #555;
+
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 70px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: "Raleway";
+    font-weight: 300;
+    color: #FFF;
+
+}
+
+p{
+    line-height: 28px;
+    margin-bottom: 25px;
+}
+
+.centered{
+    text-align: center;
+}
+ a{
+     color: #f85c37;
+
+ }
+
+ a:hover, a:focus{
+     color: #7b7b7b;
+     text-decoration: none;
+     outline: 0;
+ }
+
+.navbar {
+    font-weight: 800;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-inverse{
+    background: #2d2d2d;
+    border-color: #2d2d2d;
+}
+
+.navbar-inverse .navbar-nav > .active >a{
+    background-color: #ff7878;
+}
+
+.navbar-inverse .navbar-brand{
+    color: #999;
+    font-weight: bolder;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+#contacts {
+/*background: #2d2d2d;*/
+    background: #2d2d2d;
+    padding-top: 36px;
+    padding-bottom: 36px;
+}
+
+#contacts a {
+    color: #FFF;
+    letter-spacing: 1px;
+    border-bottom: 2px solid transparent;
+    transition: all ease-in-out 0.2s;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 14px;
+}
+
+
+
+#contacts a:hover {
+    color: #d80000;
+    border-color: #d80000;
+    transition: 0.6s;
+}
+
+#headerwrap {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+
+/*Отвечает за слайдер*/
+.main-text
+{
+    position: absolute;
+    top: 50px;
+    width: 96.66666666666666%;
+    color: #2d2d2d;
+}
+.btn-min-block
+{
+    min-width: 170px;
+    line-height: 26px;
+}
+.btn-clear
+{
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+.btn-clear:hover
+{
+    color: #000;
+    background-color: #FFF;
+}
+.left{
+    display: none;
+}
+.right{
+    display: none;
+}
+.carousel-indicators{
+    display: none;
+}
+
+
+
+
+
+
+
+/*Регистрация*/
+
+#login{
+    margin-top: 120px;
+}
+h4{
+   font-size: 30px;
+  }
+.login-content {
+    margin-top: 10px;
+    height: 300px;
+// background-color: rgba(153,153,153,0.35);
+// background-color: rgba(255,255,255);
+}
+
+.login-form{
+    margin-top: 50px;
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.login-form .row {
+    margin-bottom: 20px;
+}
+
+.login-form input {
+    border-radius: 3px;
+    width: 350px;
+    color: black;
+    padding: 5px 6px 5px;
+    border: 2px solid rgba(255, 255, 255, 0.0);
+//border: 2px solid black;
+    background-color: rgba(255,255,255, 0.6);
+    outline: none;
+}
+
+
+h2{
+    margin: 0;
+    color: #666;
+    padding-top: 90px;
+    font-size: 52px;
+    font-family: "trebuchet ms", sans-serif;
+}
+
+
+
+.login-form .submit-button {
+    letter-spacing: 1px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    transition: all ease-in-out 0.4s;
+}
+
+.login-form .submit-button:hover {
+    border: 2px solid rgba(255,255,255,0.0);
+
+    background-color: rgba(255,255,255,0.2);
+}
+
+.sign-up {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sign-up a {
+    color: white;
+    border-bottom: 2px solid transparent;
+    transition: all ease-in-out 0.4s;
+}
+
+.sign-up a:hover {
+    border-color: white;
+}
+
+.tab .nav-tabs{
+    border-bottom: none;
+    padding: 0 170px;
+    position: relative;
+}
+.tab .nav-tabs li{ margin: 0 30px 0 0; }
+.tab .nav-tabs li a{
+    font-size: 18px;
+    color: #fff;
+    border-radius: 0;
+    text-transform: uppercase;
+    background: transparent;
+    padding: 0;
+    margin-right: 0;
+    border: none;
+    border-bottom: 2px solid transparent;
+    opacity: 0.5;
+    position: relative;
+    transition: all 0.5s ease 0s;
+}
+.tab .nav-tabs li a:hover{ background: transparent; }
+.tab .nav-tabs li.active a,
+.tab .nav-tabs li.active a:focus,
+.tab .nav-tabs li.active a:hover{
+    border: none;
+    background: transparent;
+    opacity: 1;
+    border-bottom: 2px solid #eec111;
+    color: #fff;
+}
+
+
+.menu{
+    width: 100%;
+    height: 660px;
+    background: #f2f2f2;
+    border-radius: 20px;
+    margin-top: 40px;
+}
+
+label{
+    color: #666;
+}
+#amount{
+    border:0;
+    color:#666;
+    font-weight:bold;
+    width: 80px;
+    text-align: center;
+    border-radius: 10px;
+}
+p{
+    margin-bottom: 0px;
+}
+#slider-range{
+    width: 95%;
+    margin-left: 2.5%;
+}
+
+.form-group{
+    margin-top: 10px;
+    width: 96%;
+    margin-left: 2%;
+    font-weight: bold;
+
+
+}
+
+.monday{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.breakfast{
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: #2d2d2d;
+
+}
+/*.breakfast:hover{*/
+    /*background: rgba(255, 204, 0, 0.83);*/
+    /*transition: 0.6s;*/
+
+/*}*/
+.lunch{
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: #2d2d2d;
+
+}
+/*.lunch:hover{*/
+    /*background: #FF9900;*/
+    /*transition: 0.6s;*/
+/*}*/
+
+.dinner {
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: #2d2d2d;
+
+}
+/*.dinner:hover{*/
+    /*background: #66CCFF;*/
+    /*transition: 0.6s;*/
+/*}*/
+.text:hover{
+    color: #d83f30;
+    border-color: #d80000;
+    transition: 0.6s;
+}
+
+
+
+
+
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.image {
+    padding: 58% 0%;
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 10px;
+    background-color: rgba(255, 204, 0, 0.83);
+    overflow: hidden;
+    width: 100%;
+    height:0;
+    transition: .5s ease;
+}
+.overlay1 {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 10px;
+    background-color: rgba(255, 153, 0, 0.83);;
+    overflow: hidden;
+    width: 100%;
+    height:0;
+    transition: .5s ease;
+}
+.overlay2 {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 10px;
+    background-color: rgba(0, 140, 186, 0.83);
+    overflow: hidden;
+    width: 100%;
+    height:0;
+    transition: .5s ease;
+}
+
+.container:hover .overlay {
+    bottom: 0;
+    height: 100%;
+}
+.container:hover .overlay1 {
+    bottom: 0;
+    height: 100%;
+}
+.container:hover .overlay2 {
+    bottom: 0;
+    height: 100%;
+}
+
+.text {
+    white-space: nowrap;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+#compilingAMenu{
+    height: 800px;
+}
+h4{
+    font-family: "Dosis", serif;
+    color: #2d2d2d;
+    font-size: 50px;
+}
+
+.yak{
+    margin-top: 200px;
+    font-size: 80px;
+    font-weight: bold;
+    font-family: "Dosis", serif;
+
+
+}
+
+
+.reciepes{
+    height: 1600px;
+    font-family: "Dosis", serif;
+
+
+}
+.picturedishes{
+    width: 100%;
+    border-radius: 0 0 16px 16px;
+}
+#picturedishes{
+
+}
+
+.time{
+    font-size: 30px;
+}
+.ingredientsAbdCalories{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+h3{
+    font-family: "Dosis", serif;
+    color: #2d2d2d;
+}
+#cooking{
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.stage{
+    background: rgba(232, 232, 232, 0.47);
+    height: 200px;
+
+}
