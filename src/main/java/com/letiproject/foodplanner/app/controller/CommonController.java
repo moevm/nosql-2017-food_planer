@@ -1,7 +1,7 @@
 package com.letiproject.foodplanner.app.controller;
 
-import com.letiproject.foodplanner.app.domain.TestObject;
-import com.letiproject.foodplanner.app.repository.DomainRepository;
+import com.letiproject.foodplanner.app.domain.Recipe;
+import com.letiproject.foodplanner.app.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +13,14 @@ import java.util.Map;
 public class CommonController {
 
     @Autowired
-    private DomainRepository repository;
+    private RecipeRepository repository;
 
     @RequestMapping(value = "/")
     public String returnHelloWorldMsg(Map<String, Object> model) {
-        repository.insert(new TestObject("Some data"));
-        List<TestObject> all = repository.findAll();
-        model.put("objects", all);
 
-        model.put("welcome", "Hello User. It's test page!");
-        return "welcome";
+        List<Recipe> all = repository.findAll();
+        model.put("recipe", all.get(0));
+
+        return "menuForm";
     }
 }
