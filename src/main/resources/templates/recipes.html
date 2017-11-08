@@ -32,47 +32,111 @@
             <!--<div class="col-md-2"></div>-->
             <div class="col-lg-8 col-lg-offset-2">
 
-                <div class="reciepes">
+            <div class="reciepes">
 
-
-                    <h4 th:text="${recipe.name}"></h4>
-                    <div id="picturedishes">
-                        <img class="picturedishes" src="image/eda.jpg" alt="...">
-
+                <div class="nameAndCost">
+                    <div>
+                    <h4>Lorem ipsum dolor sit amet</h4>
                     </div>
-                    <div class="time" th:inline="text">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> Cooking time : [[${recipe.cookingTime}]]
-                    </div>
-                    <div class="ingredientsAbdCalories">
-                        <div class="ingredients">
-                            <h4>Ingredients</h4>
-                            <ul>
-                                <th:block th:each="ingredient : ${recipe.ingredients}" th:inline="text">
-                                    <li>[[${ingredient.name}]] - [[${ingredient.amount}]] шт.</li>
-                                </th:block>
-                            </ul>
-                        </div>
-                        <div id="calories">
-                            <h4>Nutrition</h4>
-                            <th:block th:each="nutrition : ${recipe.nutrition}">
-                                <h3>Fats: <span th:text="${nutrition.fats}"></span></h3>
-                                <h3>Proteins: <span th:text="${nutrition.proteins}"></span></h3>
-                                <h3>Carbohydrates: <span th:text="${nutrition.carbohydrates}"></span></h3>
-                            </th:block>
-                            <h3>Calories: <span th:text="${recipe.calories}"></span></h3>
-                        </div>
-                    </div>
-                    <div id="cooking">
-                        <th:block th:each="step : ${recipe.steps}">
-                            <div class="stage" th:inline="text">
-                                <h3>Шаг [[${step.number}]]</h3>
-                                [[${step.description}]]
-                            </div>
-                        </th:block>
-
+                    <div>
+                        <h4>Cost: 1241</h4>
                     </div>
 
                 </div>
+
+
+
+
+
+                <div id="picturedishes">
+                <img class="picturedishes" src="image/eda.jpg" alt="...">
+
+                </div>
+                <div class="time">
+
+                    <div><i class="fa fa-clock-o" aria-hidden="true"></i> Cooking time : 1h 20min</div>
+                    <div>Nationality: Uzbek</div>
+
+                </div>
+                <div id="description">
+                    <h4>Description</h4>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco
+                    </div>
+
+                </div>
+                <div class="ingredientsAbdCalories">
+
+                    <div class="ingredients">
+                    <h4>Ingredients</h4>
+                        <ol>
+                            <li>Lorem ipsum dolor si</li>
+                            <li>Lorem ipsum dolor si</li>
+                            <li>Lorem ipsum dolor si</li>
+                            <li>onsectetur adipisicing elit</li>
+                            <li>onsectetur adipisicing elit</li>
+                            <li>onsectetur adipisicing elit</li>
+                            <li>onsectetur adipisicing elit</li>
+                        </ol>
+                    </div>
+                    <div id="calories">
+                        <h4>Nutrition</h4>
+                        <h3>Fats: 414</h3>
+                        <h3>Calories: 123</h3>
+                        <h3>Proteins: 123</h3>
+                        <h3>Carbohydrates: 124</h3>
+
+                    </div>
+                </div>
+                <div id="cooking">
+                    <div class="stage">
+                    <h3>Stage 1</h3>
+                        Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco
+
+                    </div>
+                    <div class="stage">
+                        <h3>Stage 2</h3>
+                        Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                    <div class="stage">
+                        <h3>Stage 3</h3>
+                        Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua.
+                        Ut enim,Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                        quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
             </div>
         </div>
 
@@ -98,7 +162,7 @@
     </div>
 </div>
 
-<script th:href="@{/js/jquery.min.js}" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 <script th:href="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
