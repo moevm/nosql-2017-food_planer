@@ -17,12 +17,13 @@ public class Recipe {
     private int cost;
     private String cookingTime;
     private int calories;
+    private String type;
     private List<Nutrition> nutrition;
     private List<Step> steps;
     private List<Ingredient> ingredients;
 
     public Recipe(String name, String cuisine, String description,
-                  int cost, String cookingTime, int calories,
+                  int cost, String cookingTime, int calories, String type,
                   List<Nutrition> nutrition, List<Step> steps, List<Ingredient> ingredients) {
         this.name = name;
         this.cuisine = cuisine;
@@ -30,6 +31,7 @@ public class Recipe {
         this.cost = cost;
         this.cookingTime = cookingTime;
         this.calories = calories;
+        this.type = type;
         this.nutrition = nutrition;
         this.steps = steps;
         this.ingredients = ingredients;
@@ -81,6 +83,14 @@ public class Recipe {
 
     public void setCookingTime(String cookingTime) {
         this.cookingTime = cookingTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getCalories() {

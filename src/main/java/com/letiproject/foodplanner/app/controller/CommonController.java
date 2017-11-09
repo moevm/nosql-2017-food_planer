@@ -2,6 +2,7 @@ package com.letiproject.foodplanner.app.controller;
 
 import com.letiproject.foodplanner.app.domain.Recipe;
 import com.letiproject.foodplanner.app.repository.RecipeRepository;
+import com.letiproject.foodplanner.app.service.api.RecipeSuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +16,14 @@ public class CommonController {
     @Autowired
     private RecipeRepository repository;
 
+    @Autowired
+    private RecipeSuggestionService suggestionService;
+
     @RequestMapping(value = "/")
     public String returnHelloWorldMsg(Map<String, Object> model) {
 
         List<Recipe> all = repository.findAll();
-        model.put("recipe", all.get(0));
-
+        List<Map<String, Recipe>> menu = suggestionService.findBestSuggestion(10000, 21000);
         return "menuForm";
     }
 }
