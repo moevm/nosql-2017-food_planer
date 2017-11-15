@@ -4,73 +4,105 @@ import com.letiproject.foodplanner.app.domain.Recipe;
 import com.letiproject.foodplanner.app.repository.RecipeRepository;
 import com.letiproject.foodplanner.app.service.api.RecipeSuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+
+//imports as static
 
 @Service
 public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
 
     @Autowired
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
-    public List<Map<String, Recipe>> findBestSuggestion(int budget, int caloriesLimit) {
-        List<Recipe> recipes = recipeRepository.findAll();
+    public List<List<Recipe>> findBestSuggestion(int budget, int caloriesLimit) {
         int budgetPerDay = budget/7;
         int budgetPerMeal = budgetPerDay/3;
         int caloriesPerDay = caloriesLimit/7;
         int caloriesPerMeal = caloriesPerDay/3;
-        List<Recipe> breakfasts = new ArrayList<>();
-        List<Recipe> lunches = new ArrayList<>();
-        List<Recipe> dinners = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            if (recipe.getCost() <= budgetPerMeal
-                    && recipe.getCalories() <= caloriesPerMeal
-                    && recipe.getType().equalsIgnoreCase("завтрак")) {
-                breakfasts.add(recipe);
-            } else if (recipe.getCost() <= budgetPerMeal
-                    && recipe.getCalories() <= caloriesPerMeal
-                    && recipe.getType().equalsIgnoreCase("обед")) {
-                lunches.add(recipe);
-            } else if (recipe.getCost() <= budgetPerMeal
-                    && recipe.getCalories() <= caloriesPerMeal
-                    && recipe.getType().equalsIgnoreCase("ужин")) {
-                dinners.add(recipe);
-            }
-        }
-        Map<String, Recipe> breakfastsForWeek = getAnyThreePerMeal(breakfasts, "завтрак");
-        Map<String, Recipe> lunchesForWeek = getAnyThreePerMeal(lunches, "обед");
-        Map<String, Recipe> dinnersForWeek = getAnyThreePerMeal(dinners, "ужин");
-        List<Map<String, Recipe>> result = new ArrayList<>();
+
+
+        List<Recipe> breakfastsForWeek = getAnyThreePerMeal("завтрак", budgetPerMeal, caloriesPerMeal);
+        List<Recipe> lunchesForWeek = getAnyThreePerMeal("обед", budgetPerMeal, caloriesPerMeal);
+        List<Recipe> dinnersForWeek = getAnyThreePerMeal("ужин", budgetPerMeal, caloriesPerMeal);
+        List<List<Recipe>> result = new ArrayList<>();
         result.add(breakfastsForWeek);
         result.add(lunchesForWeek);
         result.add(dinnersForWeek);
+
         return result;
     }
 
-    public Map<String, Recipe> getAnyThreePerMeal(List<Recipe> recipes, String type) {
-        Map<String, Recipe> result = new HashMap<>();
-        if (recipes.size() >= 7) {
-            int step = recipes.size()/7;
-            for (int i = 0, j = 0; j < 7; j++, i += step) {
-                result.put(type + i + 1, recipes.get(i));
+
+    private List<Recipe> getAnyThreePerMeal(String type, int budgetPerMeal, int caloriesPerMeal) {
+        List<AggregationOperation> standartOperations = prepareAggregationOperationsList(budgetPerMeal, caloriesPerMeal, Sort.Direction.DESC, true);
+        Aggregation agg = newAggregation(getAggregationOperationsByMealType(type, standartOperations));
+        List<Recipe> result = new ArrayList<>();
+        List<Recipe> recipes = mongoTemplate.aggregate(agg, Recipe.class, Recipe.class).getMappedResults();
+
+        if (recipes.size() == 0) {
+            standartOperations = prepareAggregationOperationsList(budgetPerMeal, caloriesPerMeal, Sort.Direction.ASC, false);
+            agg = newAggregation(getAggregationOperationsByMealType(type, standartOperations));
+            recipes = mongoTemplate.aggregate(agg, Recipe.class, Recipe.class).getMappedResults();
+            if (recipes.size() < 7) {
+                result.addAll(fillWeekMenuIfRecipesLessThan7(recipes));
+            } else {
+                result = recipes;
             }
+        } else if (recipes.size() < 7 && recipes.size() > 0) {
+            result.addAll(fillWeekMenuIfRecipesLessThan7(recipes));
+        } else {
+            result = recipes;
         }
-        if (recipes.size() < 7 && recipes.size() > 0) {
-            int counter = 0;
-            for (int i = 0; i < 7; i++) {
-                if (counter < recipes.size()) {
-                    result.put(type + i + 1, recipes.get(counter++));
-                } else {
-                    result.put(type + i + 1, recipes.get(counter = 0));
-                }
-            }
-        }
+
         return result;
+    }
+
+    private List<Recipe> fillWeekMenuIfRecipesLessThan7 (List<Recipe> existedRecipes) {
+        List<Recipe> filledRecipes = new ArrayList<>(7);
+        int counter = 0;
+        for (int i = 0; i < 7; i++) {
+            if (counter < existedRecipes.size()) {
+                filledRecipes.add(existedRecipes.get(counter++));
+            } else {
+                filledRecipes.add(existedRecipes.get(counter = 0));
+            }
+        }
+
+        return filledRecipes;
+    }
+
+    private List<AggregationOperation> getAggregationOperationsByMealType (String type, List<AggregationOperation> standartOperations) {
+        List<AggregationOperation> resultOperations = new ArrayList<>();
+        resultOperations.addAll(standartOperations);
+        resultOperations.add(new MatchOperation(Criteria.where("type").is(type)));
+        resultOperations.add(new LimitOperation(7));
+        return resultOperations;
+    }
+
+    private List<AggregationOperation> prepareAggregationOperationsList (int budget, int calories, Sort.Direction sortDirection, boolean isUpperLimit) {
+        List<AggregationOperation> operations = new ArrayList<>();
+        if (isUpperLimit) {
+            operations.add(new MatchOperation(Criteria.where("calories").lte(calories)));
+            operations.add(new MatchOperation(Criteria.where("cost").lte(budget)));
+        } else {
+            operations.add(new MatchOperation(Criteria.where("calories").gte(calories)));
+            operations.add(new MatchOperation(Criteria.where("cost").gte(budget)));
+        }
+        operations.add(new SortOperation(new Sort(sortDirection, "calories")));
+        return operations;
     }
 
 

@@ -23,7 +23,7 @@ public class CommonController {
     public String returnHelloWorldMsg(Map<String, Object> model) {
 
         List<Recipe> all = repository.findAll();
-        List<Map<String, Recipe>> menu = suggestionService.findBestSuggestion(10000, 21000);
+        List<List<Recipe>> menu = suggestionService.findBestSuggestion(10000, 10500);
         return "menuForm";
     }
 }
