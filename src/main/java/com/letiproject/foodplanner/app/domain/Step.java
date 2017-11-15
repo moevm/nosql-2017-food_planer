@@ -3,22 +3,20 @@ package com.letiproject.foodplanner.app.domain;
 
 public class Step {
 
-    private static int numberCounter = 1;
-
-    private int number;
+    private int step_number;
     private String description;
 
-    public Step(String description) {
-        this.number = numberCounter++;
+    public Step(int step_number, String description) {
+        this.step_number = step_number;
         this.description = description;
     }
 
     public int getNumber() {
-        return number;
+        return step_number;
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.step_number = number;
     }
 
     public String getDescription() {

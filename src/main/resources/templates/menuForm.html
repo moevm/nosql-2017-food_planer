@@ -99,25 +99,31 @@
                 <div class="menu" id="menu">
                     <h4>We will help you</h4>
                     <div class="choice">
-                        <p>
-                            <label for="amount">Calories</label>
-                            <input type="text" id="amount">
-                        </p>
-                        <div id="slider-range"></div>
+                        <form action="/menu" method="get">
+                            <p>
+                                <!--<label for="amount">Calories</label>-->
+                                Калории
+                                <input type="text" name="caloriesLimit"/>
+                                <!--<input type="text" id="amount" name="caloriesLimit">-->
+                            </p>
+                            <div id="slider-range"></div>
 
-                        <p>
-                            <label for="amount">Cost</label>
-                            <input type="text" id="amountCost">
-                        </p>
-                        <div id="slider-rangeForCost"></div>
+                            <p>
+                                <!--<label for="amount">Cost</label>-->
+                                Бюджет
+                                <input type="text" name="budgetLimit">
+                                <!--<input type="text" id="amountCost" name="budgetLimit">-->
+                            </p>
+                            <div id="slider-rangeForCost"></div>
 
-                        <div class="form-group">
-                            <select class="form-control" id="sel1">
-                                <option>For a week</option>
-                                <option>For a month</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-success">Success</button>
+                            <div class="form-group">
+                                <select class="form-control" id="sel1" name="period">
+                                    <option>For a week</option>
+                                    <option>For a month</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success">Success</button>
+                        </form>
                     </div>
 
                 </div>

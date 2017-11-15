@@ -5,10 +5,12 @@ public class Ingredient {
 
     private String name;
     private int amount;
+    private String units;
 
-    public Ingredient(String name, int amount) {
+    public Ingredient(String name, int amount, String units) {
         this.name = name;
         this.amount = amount;
+        this.units = units;
     }
 
     public String getName() {
@@ -25,5 +27,13 @@ public class Ingredient {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
     }
 }

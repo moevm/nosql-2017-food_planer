@@ -38,9 +38,16 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         List<Recipe> lunchesForWeek = getAnyThreePerMeal("обед", budgetPerMeal, caloriesPerMeal);
         List<Recipe> dinnersForWeek = getAnyThreePerMeal("ужин", budgetPerMeal, caloriesPerMeal);
         List<List<Recipe>> result = new ArrayList<>();
-        result.add(breakfastsForWeek);
-        result.add(lunchesForWeek);
-        result.add(dinnersForWeek);
+
+        for (int i = 0; i < 7; i++) {
+            result.add(new ArrayList<>(3));
+            result.get(i).add(breakfastsForWeek.get(i));
+            result.get(i).add(lunchesForWeek.get(i));
+            result.get(i).add(dinnersForWeek.get(i));
+        }
+        //result.add(breakfastsForWeek);
+        //result.add(lunchesForWeek);
+        //result.add(dinnersForWeek);
 
         return result;
     }
@@ -78,6 +85,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
                 filledRecipes.add(existedRecipes.get(counter++));
             } else {
                 filledRecipes.add(existedRecipes.get(counter = 0));
+                counter++;
             }
         }
 
