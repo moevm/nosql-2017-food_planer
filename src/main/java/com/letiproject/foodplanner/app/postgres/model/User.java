@@ -1,59 +1,127 @@
 package com.letiproject.foodplanner.app.postgres.model;
 
-import com.letiproject.foodplanner.app.util.type.AuthorityType;
+import com.letiproject.foodplanner.app.postgres.model.type.UserState;
+import com.letiproject.foodplanner.app.postgres.model.type.UserType;
+import com.letiproject.foodplanner.app.web.util.resolvers.DatabaseResolver;
+import com.letiproject.foodplanner.app.web.util.validation.StringHashFactory;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = DatabaseResolver.TABLE_USERS, schema = DatabaseResolver.SCHEMA)
 public class User {
 
+    public static final User EMPTY = new User();
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "email")
-    @NotNull
+    @Column(name = "state")
+    private UserState state;
+
+    @Column(name = "type", nullable = false)
+    private UserType type;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "login")
-    private String login;
+    @Column(name = "phone")
+    private String phone;
 
-    @Column(name = "password")
-    @NotNull
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name")
-    private String firstName;
+    @Column(name = "about")
+    private String about;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "isNotified")
+    private Boolean isNotified;
 
-    @Column(name = "enabled")
-    private boolean enabled;
+    @Column(name = "endMuteTime")
+    private Timestamp muteEnd;
 
-    @Column(name = "is_using_2FA")
-    private boolean isUsing2FA;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @PrimaryKeyJoinColumn//(name = "userId", referencedColumnName = "id")
+    private Zone zone;
 
-    @Column(name = "secret")
-    private String secret;
+    private User() {
+        this.id = UserType.EMPTY.getValue();
+        this.state = UserState.UNKNOWN;
+        this.type = UserType.EMPTY;
+        this.name = "";
+        this.email = "";
+        this.phone = "";
+        this.password = "";
+        this.about = "";
+        this.isNotified = false;
+        this.muteEnd = Timestamp.valueOf(LocalDateTime.MAX);
+    }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = UserRole.class, mappedBy = "pk.user")
-    private Set<UserRole> userRoles;
+    public User(UserType type, String name,
+                String email, String phone,
+                String password, String about) {
+        this.id = StringHashFactory.generateHashSimple(email, StringHashFactory.HashType.EMAIL);
+        this.state = UserState.AWAIT_VERIFICATION;
+        this.type = type != null ? type : UserType.UNKNOWN;
+        this.name = name;
+        this.email = email; //StringHashFactory.generateHashCrypto(email, StringHashFactory.HashType.EMAIL);
+        this.phone = String.valueOf(email.hashCode());
+        this.password = password; //StringHashFactory.generateHashCrypto(password, StringHashFactory.HashType.PASS);
+        this.about = about;
+        this.isNotified = false;
+    }
 
-    @Column(name = "type")
-    private AuthorityType typeOfUser;
+    public User(UserType type, String name,
+                String email, String phone,
+                String password, String about,
+                boolean isNotified, LocalDateTime muteEnd) {
+        this(type, name, email, phone, password, about);
+        this.isNotified = isNotified;
+        this.muteEnd = Timestamp.valueOf(muteEnd);
+    }
 
+    public User(UserType type, String name, String email,
+                String phone, String password, String about,
+                boolean isNotified, LocalDateTime muteEnd,
+                Zone zone) {
+        this(type, name, email, phone, password, about, isNotified, muteEnd);
+        this.zone = zone;
+    }
+
+    //<editor-fold desc="GetterAndSetter">
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public UserState getState() {
+        return state;
+    }
+
+    public void setState(UserState state) {
+        this.state = state;
+    }
+
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -64,12 +132,12 @@ public class User {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -80,94 +148,69 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getAbout() {
+        return about;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Boolean getNotified() {
+        return isNotified;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setNotified(Boolean notified) {
+        isNotified = notified;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public Timestamp getMuteEnd() {
+        return muteEnd;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setMuteEnd(Timestamp muteEnd) {
+        this.muteEnd = muteEnd;
     }
 
-    public boolean isUsing2FA() {
-        return isUsing2FA;
+    public Zone getZone() {
+        return zone;
     }
 
-    public void setUsing2FA(boolean using2FA) {
-        isUsing2FA = using2FA;
+    public void setZone(Zone zone) {
+        this.zone = zone;
     }
 
-    public String getSecret() {
-        return secret;
-    }
+    //</editor-fold>
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
+        User user = (User) o;
 
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
-
-    public AuthorityType getTypeOfUser() {
-        return typeOfUser;
-    }
-
-    public void setTypeOfUser(AuthorityType typeOfUser) {
-        this.typeOfUser = typeOfUser;
+        return id.equals(user.id);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((email == null) ? 0 : email.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User user = (User) obj;
-        if (!email.equals(user.email)) {
-            return false;
-        }
-        return true;
+        return id.hashCode();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("User [id=").append(id).append(", firstName=").append(firstName).append(", lastName=").append(lastName).append(", email=").append(email).append(", password=").append(password).append(", enabled=").append(enabled).append(", isUsing2FA=")
-                .append(isUsing2FA).append(", secret=").append(secret).append(", roles=").append(userRoles).append("]");
-        return builder.toString();
+        return "User{" +
+                "id=" + id +
+                ", state=" + state +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", about='" + about + '\'' +
+                ", isNotified=" + isNotified +
+                ", muteEnd=" + muteEnd +
+                ", zone=" + zone +
+                '}';
     }
-
 }

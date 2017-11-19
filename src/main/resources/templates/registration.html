@@ -1,149 +1,84 @@
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" content="text/html"/>
+    <title>Register</title>
+
+    <div th:replace="fragments/header :: header-css"/>
+</head>
 <body>
-<h1 th:text="#{label.form.title}">form</h1>
-
 <div class="container">
-    <div>
-        <h1 th:text="#{label.form.title}">form</h1>
-        <br/>
-        <form action="/" method="POST" enctype="utf8">
-            <div class="form-group row">
-                <label class="col-sm-3" th:text="#{label.user.firstName}">first</label>
-                <span class="col-sm-5">
-                    <input class="form-control" name="firstName" th:field="*{firstName}" value="" required="required"/>
-                </span>
-                <span id="firstNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
-                <p th:each="error: ${#fields.errors('firstName')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3" th:text="#{label.user.lastName}">last</label>
-                <span class="col-sm-5">
-                    <input class="form-control" th:field="*{lastName}" name="lastName" value=""/>
-                </span>
-                <span id="lastNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
-                <p th:each="error : ${#fields.errors('lastName')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3" th:text="#{label.user.email}">email</label>
-                <span class="col-sm-5">
-                    <input type="email" class="form-control" th:field="*{email}" name="email" value=""
-                           required="required"/>
-                </span>
-                <span id="emailError" class="alert alert-danger col-sm-4" style="display:none"></span>
+    <div th:replace="fragments/header :: header"></div>
 
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3" th:text="#{label.user.password}">password</label>
-                <span class="col-sm-5">
-                    <input id="password" class="form-control" th:field="*{password}" name="password" value=""
-                           type="password" required="required"/>
-                </span>
-                <span id="passwordError" class="alert alert-danger col-sm-4" style="display:none"></span>
-                <p th:each="error : ${#fields.errors('password')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3" th:text="#{label.user.confirmPass}">confirm</label>
-                <span class="col-sm-5">
-                    <input id="matchPassword" class="form-control" th:field="*{matchingPassword}"
-                           name="matchingPassword" value="" type="password" required="required"/>
-                </span>
-                <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3" th:text="#{label.user.2fa}">Use Two Step Verification</label>
-                <span class="col-sm-5">
-                    <input type="checkbox" name="using2FA" value="true" disabled/>
-                </span>
-            </div>
-            <br/>
-            <button type="submit" class="btn btn-primary" th:text="#{label.form.submit}">submit</button>
-        </form>
-        <br/>
-        <a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="container">
+        <div class="row">
+            <form class="form-horizontal" autocomplete="off" th:action="@{/register}"
+                  th:object="${user}" method="POST" role="form">
+
+                <div class="row">
+                    <div class="main">
+                        <h3>Зарегистрируйтесь, или <a th:href="@{/login}">Войдите</a></h3>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="name_input">Имя</label>
+                    <div class="col-md-4">
+                        <input id="name_input" class="form-control input-md" type="text" th:field="*{name}"
+                               placeholder="Ваше имя"/>
+
+                        <span class="help-block">
+                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                       class="validation-message"></label>
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="email_input">Email</label>
+                    <div class="col-md-4">
+                        <input id="email_input" class="form-control input-md" type="text" th:field="*{email}"
+                               placeholder="Ваш Email"/>
+
+                        <span class="help-block">
+                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                       class="validation-message"></label>
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="pass_input">Пароль</label>
+                    <div class="col-md-4">
+                        <input id="pass_input" class="form-control input-md" type="password" th:field="*{password}"
+                               placeholder="Ваш пароль"/>
+
+                        <span class="help-block">
+                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                       class="validation-message"></label>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="button_input"></label>
+                    <div class="col-md-4">
+
+                            <span class="help-block">
+                                <span th:utext="${successMessage}"></span>
+                            </span>
+                        <button id="button_input" class="btn btn-primary" type="submit">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var serverContext = [[@{
-        /}]];
-
-        $(document).ready(function () {
-            $('form').submit(function (event) {
-                register(event);
-            });
-
-            $(":password").keyup(function () {
-                if ($("#password").val() != $("#matchPassword").val()) {
-                    $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
-                } else {
-                    $("#globalError").html("").hide();
-                }
-            });
-
-            options = {
-                common: {minChar: 8},
-                ui: {
-                    showVerdictsInsideProgressBar: true,
-                    showErrors: true,
-                    errorMessages: {
-                        wordLength: /*[[#{error.wordLength}]]*/,
-                        wordNotEmail: /*[[#{error.wordNotEmail}]]*/,
-                        wordSequences: /*[[#{error.wordSequences}]]*/,
-                        wordLowercase: /*[[#{error.wordLowercase}]]*/,
-                        wordUppercase: /*[[#{error.wordUppercase}]]*/,
-                        wordOneNumber: /*[[#{error.wordOneNumber}]]*/,
-                        wordOneSpecialChar: /*[[#{error.wordOneSpecialChar}]]*/
-                    }
-                }
-            };
-            $('#password').pwstrength(options);
-        });
-
-        function register(event) {
-            event.preventDefault();
-            $(".alert").html("").hide();
-            $(".error-list").html("");
-            if ($("#password").val() != $("#matchPassword").val()) {
-                $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
-                return;
-            }
-            var formData = $('form').serialize();
-            $.post(serverContext + "user/registration", formData, function (data) {
-                if (data.message == "success") {
-                    window.location.href = serverContext + "successRegister.html";
-                }
-
-            })
-                .fail(function (data) {
-                    if (data.responseJSON.error.indexOf("MailError") > -1) {
-                        window.location.href = serverContext + "emailError.html";
-                    }
-                    else if (data.responseJSON.error == "UserAlreadyExist") {
-                        $("#emailError").show().html(data.responseJSON.message);
-                    }
-                    else if (data.responseJSON.error.indexOf("InternalError") > -1) {
-                        window.location.href = serverContext + "login?message=" + data.responseJSON.message;
-                    }
-                    else {
-                        var errors = $.parseJSON(data.responseJSON.message);
-                        $.each(errors, function (index, item) {
-                            $("#" + item.field + "Error").show().html(item.defaultMessage);
-                        });
-                        errors = $.parseJSON(data.responseJSON.error);
-                        $.each(errors, function (index, item) {
-                            $("#globalError").show().append(item.defaultMessage + "<br/>");
-                        });
-                    }
-                });
-        }
-    /*]]>*/
-
-</script>
-
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>

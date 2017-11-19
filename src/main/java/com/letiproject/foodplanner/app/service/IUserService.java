@@ -1,45 +1,40 @@
 package com.letiproject.foodplanner.app.service;
 
+/*
+ * Created by @belrbeZ on 6.04.2017.
+ */
+
+
 import com.letiproject.foodplanner.app.postgres.model.User;
-import com.letiproject.foodplanner.app.postgres.model.VerificationToken;
-import com.letiproject.foodplanner.app.web.dto.UserDto;
-import com.letiproject.foodplanner.app.web.error.UserAlreadyExistException;
+import com.letiproject.foodplanner.app.web.dto.UserDTO;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.Optional;
 
-public interface IUserService {
+/**
+ * Default Comment
+ */
+public interface IUserService extends IModelDTOService<User, UserDTO> {
+    boolean existsByEmail(String email);
+
+    boolean existsByPhone(String phone);
+
+    Optional<User> getAuthorized();
+
+    Optional<User> getByEmail(String email);
+
+    Optional<User> getByPhone(String phone);
+
+    /**
+     * TRANSACTIONAL
+     */
+    Optional<User> removeByEmail(String email);
+
+    /**
+     * TRANSACTIONAL
+     */
+    Optional<User> removeByPhone(String phone);
 
     User findByEmail(String email);
 
-    User registerNewUserAccount(UserDto accountDto) throws UserAlreadyExistException;
-
-    User getUser(String verificationToken);
-
-    void saveRegisteredUser(User user);
-
-    void deleteUser(User user);
-
-    void createVerificationTokenForUser(User user, String token);
-
-    VerificationToken getVerificationToken(String VerificationToken);
-
-    VerificationToken generateNewVerificationToken(String token);
-
-    User findUserByEmail(String email);
-
-    User getUserByID(long id);
-
-    void changeUserPassword(User user, String password);
-
-    boolean checkIfValidOldPassword(User user, String password);
-
-    String validateVerificationToken(String token);
-
-    String generateQRUrl(User user) throws UnsupportedEncodingException;
-
-    User updateUser2FA(boolean use2FA);
-
-    List<String> getUsersFromSessionRegistry();
-
+    Optional<User> save(User user);
 }

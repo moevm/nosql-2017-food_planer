@@ -29,6 +29,10 @@
 
 		<!-- guava -->
 		<guava.version>20.0</guava.version>
+		<!-- Encryption -->
+		<jbcrypt-version>0.4</jbcrypt-version>
+		<lz4-version>1.3.0</lz4-version>
+
 	</properties>
 
 	<dependencies>
@@ -61,6 +65,10 @@
 			<artifactId>spring-security-test</artifactId>
 		</dependency>
 		<!--END SECURITY-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
 
 
 		<!--DATABASES-->
@@ -156,11 +164,41 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!-- Bootstrap -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars</groupId>
+					<artifactId>jquery</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 		<!-- Password Validation -->
 		<dependency>
 			<groupId>org.passay</groupId>
 			<artifactId>passay</artifactId>
 			<version>${passay.version}</version>
+		</dependency>
+
+		<!-- Encryption -->
+		<dependency>
+			<groupId>net.jpountz.lz4</groupId>
+			<artifactId>lz4</artifactId>
+			<version>${lz4-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>${jbcrypt-version}</version>
 		</dependency>
 
 		<dependency>

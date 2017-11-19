@@ -2,28 +2,47 @@
 <head>
     <div th:fragment="header-css">
         <!-- this is header-css -->
-        <link rel="stylesheet" type="text/css"
-              href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <!--<link rel="stylesheet" type="text/css"
+              href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
 
         <link rel="stylesheet" th:href="@{/css/main.css}"
               href="../../css/main.css"/>
+
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../css/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" href="../../css/font-awesome.min.css">
+        <link rel="stylesheet" th:href="@{/css/projectCss.css}" href="../../css/projectCss.css">
+        <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" href="../../css/jquery-ui.css">
+        <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" />-->
+
     </div>
 </head>
 <body>
 <div th:fragment="header">
     <!-- this is header -->
-    <nav class="navbar navbar-inverse">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" th:href="@{/}">Spring Boot</a>
+                <a class="navbar-brand" th:href="@{/}">C<i class="fa fa-circle"></i><i class="fa fa-circle"></i>KING</a>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a th:href="@{/}">Home</a></li>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+                    <li><a href="/secure/profile" th:href="@{/secure/profile}"><i class="fa fa-user-circle"
+                                                                                  aria-hidden="true"></i></a></li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a href="/secure/logout" th:href="@{/secure/logout}" onclick="$('#form').submit();">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"> </span> Выйти </a>
+                        <form style="visibility: hidden" id="form" method="post" action="#"
+                              th:action="@{/secure/logout}"></form>
+                    </li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </div>
 </div>
 
 </body>

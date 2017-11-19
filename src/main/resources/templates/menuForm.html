@@ -1,31 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../css/bootstrap.css">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" href="../../css/font-awesome.min.css">
-    <link rel="stylesheet" th:href="@{/css/projectCss.css}" href="../../css/projectCss.css">
-    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <div th:replace="fragments/header :: header-css"/>
+
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">C<i class="fa fa-circle"></i><i class="fa fa-circle"></i>KING</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i></a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div th:replace="fragments/header :: header"></div>
 
 <div id="headerwrap">
     <div class="container-fluid">
@@ -43,7 +26,7 @@
                     <!-- Содержимое слайдов -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="image/test4.jpg" alt="...">
+                            <img th:src="@{/image/test4.jpg}" alt="...">
                             <div class="carousel-caption">
                                 <h3>Полезно</h3>
                                 <p>Когда я ем, то глух и нем.</p>
@@ -51,7 +34,7 @@
                         </div>
 
                         <div class="item">
-                            <img src="image/test2.jpg" alt="...">
+                            <img th:src="@{/image/test2.jpg}" alt="...">
                             <div class="carousel-caption">
                                 <h3>Вкусно</h3>
                                 <p>Беда - бедой, а еда - едой.</p>
@@ -59,7 +42,7 @@
                         </div>
 
                         <div class="item">
-                            <img src="image/test3.jpg" alt="...">
+                            <img th:src="@{/image/test3.jpg}" alt="...">
                             <div class="carousel-caption">
                                 <h3>Сытно.</h3>
                                 <p>Не могу, а ем по пирогу.</p>
@@ -99,320 +82,31 @@
                 <div class="menu" id="menu">
                     <h4>We will help you</h4>
                     <div class="choice">
-                        <p>
-                            <label for="amount">Calories</label>
-                            <input type="text" id="amount">
-                        </p>
-                        <div id="slider-range"></div>
-                        <div class="form-group">
-                            <select class="form-control" id="sel1">
-                                <option>For a week</option>
-                                <option>For a month</option>
-                            </select>
-                        </div>
-                        <div id="days">
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                                Monday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse1" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <div class="monday">
+                        <form action="/menu" method="get">
+                            <p>
+                                <!--<label for="amount">Calories</label>-->
+                                Калории
+                                <input type="text" name="caloriesLimit"/>
+                                <!--<input type="text" id="amount" name="caloriesLimit">-->
+                            </p>
+                            <div id="slider-range"></div>
 
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                            <p>
+                                <!--<label for="amount">Cost</label>-->
+                                Бюджет
+                                <input type="text" name="budgetLimit">
+                                <!--<input type="text" id="amountCost" name="budgetLimit">-->
+                            </p>
+                            <div id="slider-rangeForCost"></div>
 
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                                Tuesday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse2" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="monday">
-
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                                Wednesday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse3" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="monday">
-
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                                Thursday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse4" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="monday">
-
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                                                Friday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse5" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="monday">
-
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
-                                                Saturday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse6" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="monday">
-
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
-                                                Sunday</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse7" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="monday">
-
-                                                <div class="breakfast">
-                                                    <div class="container">
-                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
-                                                        <div class="overlay">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="lunch">
-                                                    <div class="container">
-                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
-                                                        <div class="overlay1">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="dinner">
-                                                    <div class="container">
-                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
-                                                        <div class="overlay2">
-                                                            <a class="text" href="#">Hello world</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            <div class="form-group">
+                                <select class="form-control" id="sel1" name="period">
+                                    <option>For a week</option>
+                                    <option>For a month</option>
+                                </select>
                             </div>
-                        </div>
+                            <button type="submit" class="btn btn-success">Success</button>
+                        </form>
                     </div>
 
                 </div>
@@ -420,30 +114,8 @@
         </div>
     </div>
 </div>
-<div id="contacts" class="container-fluid">
-    <div class="row centered">
-        <div class="col-lg-6 col-lg-offset-3">
-            <a href="#">Returns</a>
-            <a href="#">FAQ</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">Account</a>
-            <a href="#">Sign Up</a>
-        </div>
-        <div class="col-lg-2">
-            <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-            <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-            <a href="#"><i class="fa fa-telegram fa-lg"></i></a>
-            <a href="#"><i class="fa fa-vk fa-lg"></i></a>
-        </div>
-    </div>
-</div>
 
-<script th:href="@{/js/jquery.min.js}" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script th:href="@{/js/jquery-1.12.4.js}" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script th:href="@{/js/jquery-ui.js}" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script th:href="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
-<script th:href="@{/js/js.js}" src="../../js/js.js"></script>
+<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

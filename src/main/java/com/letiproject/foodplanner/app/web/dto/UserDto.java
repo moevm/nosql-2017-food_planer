@@ -1,99 +1,179 @@
 package com.letiproject.foodplanner.app.web.dto;
 
-import com.letiproject.foodplanner.app.util.validation.PasswordMatches;
-import com.letiproject.foodplanner.app.util.validation.ValidEmail;
-import com.letiproject.foodplanner.app.util.validation.ValidPassword;
+/*
+ * Created by @belrbeZ on 6.04.2017.
+ */
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.letiproject.foodplanner.app.postgres.model.type.UserType;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-@PasswordMatches
-public class UserDto {
+/**
+ * Default Comment
+ */
+public class UserDTO {
+
+    public static final UserDTO EMPTY = new UserDTO();
+
     @NotNull
-    @Size(min = 1)
-    private String firstName;
+    private Long id;
 
-    @NotNull
-    @Size(min = 1)
-    private String lastName;
+    private UserType type;
 
-    @ValidPassword
+    private String name;
+    private String email;
     private String password;
 
-    @NotNull
-    @Size(min = 1)
-    private String matchingPassword;
+    private String phone;
 
-    @ValidEmail
-    @NotNull
-    @Size(min = 1)
-    private String email;
+    private String about;
+    private Boolean notified;
 
-    private boolean isUsing2FA;
-    private Integer role;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime muteEnd;
+
+    private ZoneDTO zone;
+
+    private UserDTO() {
+        this.id = UserType.EMPTY.getValue();
+        this.type = UserType.EMPTY;
+        this.name = "";
+        this.email = "";
+        this.phone = "";
+        this.password = "";
+        this.about = "";
+        this.notified = false;
+        this.muteEnd = LocalDateTime.MIN;
+    }
+
+    public UserDTO(Long id, UserType type, String name, String email, String phone, String password, String about) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.about = about;
+    }
+
+    public UserDTO(Long id, UserType type, String name,
+                   String email, String phone, String about, String password,
+                   boolean notified, Timestamp muteEnd) {
+        this(id, type, name, email, phone, password, about);
+        this.notified = notified;
+        this.muteEnd = (muteEnd == null) ? null : muteEnd.toLocalDateTime();
+    }
+
+    public UserDTO(Long id, UserType type, String name,
+                   String email, String phone, String about, String password,
+                   boolean notified, Timestamp muteEnd,
+                   ZoneDTO zone) {
+        this(id, type, name, email, phone, about, password, notified, muteEnd);
+        this.zone = zone;
+    }
+
+    //<editor-fold desc="GetterAndSetter">
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(final String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Integer getRole() {
-        return role;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRole(final Integer role) {
-        this.role = role;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(final String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getMatchingPassword() {
-        return matchingPassword;
+    public String getAbout() {
+        return about;
     }
 
-    public void setMatchingPassword(final String matchingPassword) {
-        this.matchingPassword = matchingPassword;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
-    public boolean isUsing2FA() {
-        return isUsing2FA;
+    public Boolean getNotified() {
+        return notified;
     }
 
-    public void setUsing2FA(boolean isUsing2FA) {
-        this.isUsing2FA = isUsing2FA;
+    public void setNotified(Boolean notified) {
+        this.notified = notified;
+    }
+
+    public LocalDateTime getMuteEnd() {
+        return muteEnd;
+    }
+
+    public void setMuteEnd(LocalDateTime muteEnd) {
+        this.muteEnd = muteEnd;
+    }
+
+    public ZoneDTO getZone() {
+        return zone;
+    }
+
+    public void setZone(ZoneDTO zone) {
+        this.zone = zone;
+    }
+    //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserDTO that = (UserDTO) o;
+
+        return id.equals(that.id);
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("UserDto [firstName=").append(firstName).append(", lastName=").append(lastName).append(", password=").append(password).append(", matchingPassword=").append(matchingPassword).append(", email=").append(email).append(", isUsing2FA=")
-                .append(isUsing2FA).append(", role=").append(role).append("]");
-        return builder.toString();
+    public int hashCode() {
+        return id.hashCode();
     }
-
 }

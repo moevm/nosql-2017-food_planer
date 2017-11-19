@@ -1,32 +1,19 @@
 package com.letiproject.foodplanner.app.web.controller;
 
-import com.letiproject.foodplanner.app.mongo.domain.TestObject;
-import com.letiproject.foodplanner.app.mongo.repository.DomainRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.letiproject.foodplanner.app.web.util.resolvers.TemplateResolver;
+import com.letiproject.foodplanner.app.web.util.resolvers.WebResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class WelcomeController {
 
-    @Autowired
-    private DomainRepository repository;
-
-    /**
-     * Home page.
-     */
-    @RequestMapping(value = "/")
-    public String returnHelloWorldMsg(Map<String, Object> model) {
-        repository.insert(new TestObject("Some data"));
-        List<TestObject> all = repository.findAll();
-        model.put("objects", all);
-
-        model.put("welcome", "Hello User. It's test page!");
-        return "welcome";
+    @RequestMapping(value = {"/", WebResolver.MENU_FORM}, method = RequestMethod.GET)
+    public ModelAndView welcomeGet(Model model) {
+        return new ModelAndView(TemplateResolver.MENU_FORM);
     }
 
     /**
