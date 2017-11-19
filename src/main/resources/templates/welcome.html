@@ -9,7 +9,6 @@
 
     <link rel="stylesheet" th:href="@{/css/main.css}"
           href="../../css/main.css" />
-
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -30,14 +29,24 @@
 
     <div class="starter-template">
         <h1>Test page</h1>
-        <h2>
-            <span th:text="'Message: ' + ${welcome}"></span>
-        </h2>
         <div>
             <th:block th:each="object : ${objects}">
-                <div th:text="${object.data}">
+                <div th:text="${object.name}">
 
                 </div>
+                <div th:text="${object.cuisine}">
+
+                </div>
+                <div th:text="${object.cost}">
+
+                </div>
+                <th:block th:each="step : ${object.steps}">
+                    <div th:text="${step.number}">
+                    </div>
+                    <div th:text="${step.description}">
+
+                    </div>
+                </th:block>
             </th:block>
 
         </div>

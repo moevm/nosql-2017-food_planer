@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/projectCss.css}" href="../../css/projectCss.css">
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">C<i class="fa fa-circle"></i><i class="fa fa-circle"></i>KING</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="headerwrap">
+    <div class="container">
+        <div class="row centered">
+            <!--<div class="col-md-2"></div>-->
+            <div class="col-lg-8 col-lg-offset-2">
+
+                <div class="reciepes">
+
+                    <div class="nameAndCost">
+                        <div>
+                            <h4 th:text="${recipe.name}"></h4>
+                        </div>
+                        <div>
+                            <h4>Цена: <span th:text="${recipe.cost}"></span> р.</h4>
+                        </div>
+                    </div>
+
+
+                    <div id="picturedishes">
+                        <img class="picturedishes" src="image/eda.jpg" alt="...">
+
+                    </div>
+                    <div class="time">
+
+                        <div><i class="fa fa-clock-o" aria-hidden="true"></i> Время приготовления: <span th:text="${recipe.cookingTime}"></span></div>
+                        <div>Кухня: <span th:text="${recipe.cuisine}"></span></div>
+
+                    </div>
+                    <div id="description">
+                        <h4>Описание</h4>
+                        <div class="description" th:text="${recipe.description}">
+
+                        </div>
+
+                    </div>
+                    <div class="ingredientsAbdCalories">
+
+                        <div class="ingredients">
+                            <h4>Ингредиенты</h4>
+                            <ol>
+                                <th:block th:each="ingredient : ${recipe.ingredients}">
+                                    <li><span th:text="${ingredient.name}"></span> - <span th:text="${ingredient.amount}"></span> <span th:text="${ingredient.units}"></span></li>
+                                </th:block>
+                            </ol>
+                        </div>
+                        <th:block th:each="nutr : ${recipe.nutrition}">
+                            <div id="calories">
+                                <h4>Содержание</h4>
+                                <h3>Жиры: <span th:text="${nutr.fats}"></span> грамм</h3>
+                                <h3>Калории: <span th:text="${recipe.calories}"></span> ккДж</h3>
+                                <h3>Белки: <span th:text="${nutr.proteins}"></span> грамм</h3>
+                                <h3>Углеводы: <span th:text="${nutr.carbohydrates}"></span> грамм</h3>
+                            </div>
+                        </th:block>
+                    </div>
+                    <div id="cooking">
+                        <th:block th:each="step : ${recipe.steps}">
+                            <div class="stage">
+                                <h3>Шаг <span th:text="${step.number}"></span></h3>
+                                <div th:text="${step.description}"></div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="contacts" class="container-fluid">
+    <div class="row centered">
+        <div class="col-lg-6 col-lg-offset-3">
+            <a href="#">Returns</a>
+            <a href="#">FAQ</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Account</a>
+            <a href="#">Sign Up</a>
+        </div>
+        <div class="col-lg-2">
+            <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+            <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+            <a href="#"><i class="fa fa-telegram fa-lg"></i></a>
+            <a href="#"><i class="fa fa-vk fa-lg"></i></a>
+        </div>
+    </div>
+</div>
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+<script th:href="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
+<script th:href="@{/js/js.js}" src="../../js/js.js"></script>
+</body>
+</html>
