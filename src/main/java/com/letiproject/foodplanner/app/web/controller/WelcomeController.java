@@ -1,7 +1,5 @@
 package com.letiproject.foodplanner.app.web.controller;
 
-import com.letiproject.foodplanner.app.mongo.domain.TestObject;
-import com.letiproject.foodplanner.app.mongo.repository.DomainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,23 +10,6 @@ import java.util.Map;
 
 @Controller
 public class WelcomeController {
-
-    @Autowired
-    private DomainRepository repository;
-
-    /**
-     * Home page.
-     */
-    @RequestMapping(value = "/")
-    public String returnHelloWorldMsg(Map<String, Object> model) {
-        repository.insert(new TestObject("Some data"));
-        List<TestObject> all = repository.findAll();
-        model.put("objects", all);
-
-        model.put("welcome", "Hello User. It's test page!");
-        return "welcome";
-    }
-
     /**
      * Home page.
      */

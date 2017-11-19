@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * List of static resources, which don't need to be secured
      */
-    private static final String[] UNSECURED_RESOURCE_LIST = {"/", "/home/**", "/about/**", "/public/**"};
+    private static final String[] UNSECURED_RESOURCE_LIST = {"/", "/home/**", "/about/**", "/public/**", "/login/**", "/registration/**"};
 
     /**
      * List of actuator endpoints, which would be accessible only to administrators
@@ -53,8 +53,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
+                        "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
+                        "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
+                        "/user/changePassword*", "/emailError*", "/resources/**","/old/user/registration*","/successRegister*","/qrcode*").permitAll()
                 .antMatchers(UNSECURED_RESOURCE_LIST).permitAll()
                 .antMatchers(ACTUATOR_END_POINTS).hasRole(AuthorityType.ADMIN.toString())
+                .antMatchers("/invalidSession*").anonymous()
+                .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

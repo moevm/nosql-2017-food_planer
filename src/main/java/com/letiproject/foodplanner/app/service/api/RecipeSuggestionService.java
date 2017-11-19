@@ -1,6 +1,6 @@
 package com.letiproject.foodplanner.app.service.api;
 
-import com.letiproject.foodplanner.app.domain.Recipe;
+import com.letiproject.foodplanner.app.mongo.domain.Recipe;
 
 import java.util.List;
 

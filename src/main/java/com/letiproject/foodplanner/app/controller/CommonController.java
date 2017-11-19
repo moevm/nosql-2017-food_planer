@@ -1,7 +1,7 @@
 package com.letiproject.foodplanner.app.controller;
 
-import com.letiproject.foodplanner.app.domain.Recipe;
-import com.letiproject.foodplanner.app.repository.RecipeRepository;
+import com.letiproject.foodplanner.app.mongo.domain.Recipe;
+import com.letiproject.foodplanner.app.mongo.repository.RecipeRepository;
 import com.letiproject.foodplanner.app.service.api.RecipeSuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
