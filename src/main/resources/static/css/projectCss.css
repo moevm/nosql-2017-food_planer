@@ -442,7 +442,7 @@ button{
 }
 
 #compilingAMenuTwo{
-    height: 700px;
+    /*height: 700px;*/
 }
 h4{
     font-family: "Dosis", serif;
@@ -494,8 +494,8 @@ h3{
     color: #2d2d2d;
 }
 #cooking{
-    height: 700px;
-    display: flex;
+    /*height: 700px;*/
+    /*display: flex;*/
     flex-direction: column;
     justify-content: space-around;
 
@@ -508,5 +508,8 @@ h3{
 .description{
     width: 100%;
     background: rgba(232, 232, 232, 0.47);
+}
+.ingredients{
+    text-align: left;
 }
 
