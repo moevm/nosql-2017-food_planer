@@ -1,4 +1,4 @@
-package com.letiproject.foodplanner.app.web.security;
+package com.letiproject.foodplanner.app.web.security.registration.handlers;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;

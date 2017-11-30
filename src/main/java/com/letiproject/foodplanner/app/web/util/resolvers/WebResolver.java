@@ -20,4 +20,5 @@ public class WebResolver {
     public static final String ADMIN = "/admin";
     private static final String OAUTH = "/oauth";
     private static final String TOKEN = "/token";
+    public static final String MENU = "/menu/**";
 }

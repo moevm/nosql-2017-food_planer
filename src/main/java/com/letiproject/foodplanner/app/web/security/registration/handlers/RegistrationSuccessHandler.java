@@ -1,4 +1,4 @@
-package com.letiproject.foodplanner.app.web.security.registration.listener;
+package com.letiproject.foodplanner.app.web.security.registration.handlers;
 
 import com.letiproject.foodplanner.app.postgres.model.User;
 import com.letiproject.foodplanner.app.service.IUserService;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
+public class RegistrationSuccessHandler implements ApplicationListener<OnRegistrationCompleteEvent> {
     @Autowired
     private IUserService service;
 

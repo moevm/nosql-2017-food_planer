@@ -5,22 +5,28 @@ import com.letiproject.foodplanner.app.web.util.resolvers.WebResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebMvcSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    private final String ROLE = UserType.USER.toString();
+    private final String USER = UserType.USER.toString();
     private final String ADMIN = UserType.ADMIN.toString();
 
     @Autowired
@@ -36,32 +42,47 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         WebResolver.WELCOME,
                         WebResolver.LOGIN,
                         WebResolver.MENU_FORM,
+                        WebResolver.MENU,
                         WebResolver.REGISTER, "/css/**", "/image/**", "/static/css/**", "/js/**", "/static/js/**", "/webjars/bootstrap/**", "/fonts/**").permitAll()
-                .antMatchers(WebResolver.SECURED + "/**").hasAuthority(ROLE)
-                .antMatchers(WebResolver.ADMIN + "/**").hasAuthority(ADMIN)
+                .antMatchers(WebResolver.SECURED + "/**").hasAuthority(USER)
+                .antMatchers(WebResolver.ADMIN + "/**").hasAuthority(USER)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage(WebResolver.LOGIN)
-                .defaultSuccessUrl(WebResolver.MENU_FORM)
+                .defaultSuccessUrl(WebResolver.PROFILE)
                 .failureUrl(WebResolver.LOGIN + "?error=true")
-                .usernameParameter("email")
-                .passwordParameter("password")
+//                    .usernameParameter("email")
+//                    .passwordParameter("password")
+//                    .permitAll()
                 .and()
                 .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
                 .logoutUrl(WebResolver.LOGOUT)
-                .logoutSuccessUrl(WebResolver.LOGIN)
-                .deleteCookies("remember-me")
-                .deleteCookies("JSESSIONID")
+//                    .deleteCookies("remember-me")
+                .logoutSuccessUrl(WebResolver.MENU_FORM)
+//                    .permitAll()
 //                .and()
-//                    .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(86400)
+//                    .rememberMe()/*.rememberMeParameter("remember-me")*/.tokenValiditySeconds(86400)
                 .and()
                 .sessionManagement()
-                .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
-                .sessionFixation().none()
-                .invalidSessionUrl("/invalidSession.html")
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .maximumSessions(2).sessionRegistry(sessionRegistry())
                 .and()
-                .csrf().disable();
+                .sessionFixation()
+                .none()
+                /*.and()
+                    .sessionRegistry(sessionRegistry())
+                    .sessionFixation().none()
+                    .invalidSessionUrl("/invalidSession.html")*/
+                .and()
+                .csrf()
+                .disable();
+//                .addFilterAfter(
+//                        new OauthProcessingFilter(), OauthProcessingFilter.class);;
+//        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+//        SecurityContextHolder.setStrategyName( SecurityContextHolder.MODE_GLOBAL );
     }
 
     @Bean
@@ -76,7 +97,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 */
 
-    @Bean
+    /*@Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
@@ -84,15 +105,42 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
-   /* @Override
+    @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-//            .getUserDetailsService().passwordEncoder(new BCryptPasswordEncoder());
+        auth.authenticationProvider(authenticationProvider());
     }*/
+
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user").password("user")
+                .authorities(USER).and()
+                .withUser("admin").password("admin")
+                .authorities(ADMIN);
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/js/**", "/css/**", "/image/**", "/static/image/**", "/static/css/**", "/static/js/**", "/images/**", "/webjars/bootstrap/**", "/fonts/**");
+        web.ignoring().antMatchers("/resources/**");
     }
+
+    /*@Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService);
+//                .passwordEncoder(new BCryptPasswordEncoder());
+    }*/
+
+    /*@Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/js/**", "/css/**", "/image/**", "/static/image/**", "/static/css/**", "/static/js/**", "/images/**", "/webjars/bootstrap/**", "/fonts/**");
+    }*/
 
 }

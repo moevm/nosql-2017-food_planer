@@ -2,10 +2,9 @@ package com.letiproject.foodplanner.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 //@ComponentScan
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 public class SpringBootWebApplication {
 

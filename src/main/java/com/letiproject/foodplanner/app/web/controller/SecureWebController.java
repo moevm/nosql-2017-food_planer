@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -39,13 +38,13 @@ public class SecureWebController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final AuthenticationProvider authenticationProvider;
+//    private final AuthenticationProvider authenticationProvider;
 
     @Autowired
-    public SecureWebController(IUserService userService, AuthenticationManager authenticationManager, AuthenticationProvider authenticationProvider) {
+    public SecureWebController(IUserService userService, AuthenticationManager authenticationManager/*, AuthenticationProvider authenticationProvider*/) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
-        this.authenticationProvider = authenticationProvider;
+//        this.authenticationProvider = authenticationProvider;
     }
 
     private void authenticateUserAndSetSession(User user, HttpServletRequest request) {
@@ -56,8 +55,8 @@ public class SecureWebController {
         HttpSession session = request.getSession(true);
 
         token.setDetails(new WebAuthenticationDetails(request));
-//        Authentication authenticatedUser = authenticationManager.authenticate(token);
-        Authentication authenticatedUser = authenticationProvider.authenticate(token);
+        Authentication authenticatedUser = authenticationManager.authenticate(token);
+//        Authentication authenticatedUser = authenticationProvider.authenticate(token);
         logger.info("Logging in with [{}]", authenticatedUser.getPrincipal());
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authenticatedUser);

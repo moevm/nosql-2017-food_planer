@@ -73,6 +73,8 @@
                         <button id="button_input" class="btn btn-primary" type="submit">Зарегистрироваться</button>
                     </div>
                 </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
             </form>
         </div>
     </div>

@@ -30,11 +30,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.unbescape.html.HtmlEscape;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ExceptionHandlerController {
 
     private static Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNoSuchElementException(NoSuchElementException e) {
+        return e.getMessage();
+    }
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
