@@ -1,29 +1,29 @@
 $( function() {
     $( "#slider-range" ).slider({
         range: true,
-        min: 0,
-        max: 5000,
-        values: [ 0, 1000 ],
+        min: 3000,
+        max: 24000,
+        values: [ 7000, 15000 ],
         slide: function( event, ui ) {
-            $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $( "#amount" ).val(ui.values[ 0 ] + "-" + ui.values[ 1 ] );
         }
     });
     $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-        " - " + $( "#slider-range" ).slider( "values", 1 ) );
+        "-" + $( "#slider-range" ).slider( "values", 1 ) );
 } );
 
 $( function() {
     $( "#slider-rangeForCost" ).slider({
         range: true,
-        min: 0,
-        max: 50000,
-        values: [ 0, 10000 ],
+        min: 1000,
+        max: 30000,
+        values: [ 1000, 11000 ],
         slide: function( event, ui ) {
-            $( "#amountCost" ).val(ui.values[ 0 ] + "₽ - " + ui.values[ 1 ] + "₽" );
+            $( "#amountCost" ).val(ui.values[ 0 ] + "-" + ui.values[ 1 ]);
         }
     });
     $( "#amountCost" ).val( $( "#slider-rangeForCost" ).slider( "values", 0 ) +
-        "₽ - " + $( "#slider-rangeForCost" ).slider( "values", 1 ) + "₽" );
+        "-" + $( "#slider-rangeForCost" ).slider( "values", 1 ));
 } );
 
 
