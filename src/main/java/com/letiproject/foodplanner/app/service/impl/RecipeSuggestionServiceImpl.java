@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
@@ -29,10 +28,10 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
 
     @Override
     public List<List<Recipe>> findBestSuggestion(int budget, int caloriesLimit) {
-        int budgetPerDay = budget / 7;
-        int budgetPerMeal = budgetPerDay / 3;
-        int caloriesPerDay = caloriesLimit / 7;
-        int caloriesPerMeal = caloriesPerDay / 3;
+        int budgetPerDay = budget/7;
+        int budgetPerMeal = budgetPerDay/3;
+        int caloriesPerDay = caloriesLimit/7;
+        int caloriesPerMeal = caloriesPerDay/3;
 
 
         List<Recipe> breakfastsForWeek = getAnyThreePerMeal("завтрак", budgetPerMeal, caloriesPerMeal);
@@ -42,15 +41,9 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
 
         for (int i = 0; i < 7; i++) {
             result.add(new ArrayList<>(3));
-            if (breakfastsForWeek.size() >= i && breakfastsForWeek.size() != 0) {
-                result.get(i).add(breakfastsForWeek.get(i));
-            }
-            if (lunchesForWeek.size() >= i && lunchesForWeek.size() != 0) {
-                result.get(i).add(lunchesForWeek.get(i));
-            }
-            if (dinnersForWeek.size() >= i && dinnersForWeek.size() != 0) {
-                result.get(i).add(dinnersForWeek.get(i));
-            }
+            result.get(i).add(breakfastsForWeek.get(i));
+            result.get(i).add(lunchesForWeek.get(i));
+            result.get(i).add(dinnersForWeek.get(i));
         }
         //result.add(breakfastsForWeek);
         //result.add(lunchesForWeek);
@@ -84,11 +77,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return result;
     }
 
-    private List<Recipe> fillWeekMenuIfRecipesLessThan7(List<Recipe> existedRecipes) {
-        if (existedRecipes.size() == 0) {
-            return Collections.emptyList();
-        }
-
+    private List<Recipe> fillWeekMenuIfRecipesLessThan7 (List<Recipe> existedRecipes) {
         List<Recipe> filledRecipes = new ArrayList<>(7);
         int counter = 0;
         for (int i = 0; i < 7; i++) {
@@ -103,7 +92,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return filledRecipes;
     }
 
-    private List<AggregationOperation> getAggregationOperationsByMealType(String type, List<AggregationOperation> standartOperations) {
+    private List<AggregationOperation> getAggregationOperationsByMealType (String type, List<AggregationOperation> standartOperations) {
         List<AggregationOperation> resultOperations = new ArrayList<>();
         resultOperations.addAll(standartOperations);
         resultOperations.add(new MatchOperation(Criteria.where("type").is(type)));
@@ -111,7 +100,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return resultOperations;
     }
 
-    private List<AggregationOperation> prepareAggregationOperationsList(int budget, int calories, Sort.Direction sortDirection, boolean isUpperLimit) {
+    private List<AggregationOperation> prepareAggregationOperationsList (int budget, int calories, Sort.Direction sortDirection, boolean isUpperLimit) {
         List<AggregationOperation> operations = new ArrayList<>();
         if (isUpperLimit) {
             operations.add(new MatchOperation(Criteria.where("calories").lte(calories)));
