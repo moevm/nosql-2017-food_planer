@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl(WebResolver.LOGIN_REGISTER)
+                .loginPage(WebResolver.LOGIN_REGISTER)
                 .defaultSuccessUrl(WebResolver.PROFILE)
                 .failureUrl(WebResolver.LOGIN_REGISTER + "?error=true")
 //                    .usernameParameter("email")
