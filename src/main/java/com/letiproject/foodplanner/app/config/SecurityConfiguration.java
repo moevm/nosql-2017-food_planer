@@ -44,13 +44,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         WebResolver.MENU_FORM,
                         WebResolver.MENU,
                         WebResolver.LOGIN_REGISTER,
+                        WebResolver.SECURED + "/**",
                         WebResolver.REGISTER, "/css/**", "/image/**", "/static/css/**", "/js/**", "/static/js/**", "/webjars/bootstrap/**", "/fonts/**").permitAll()
-                .antMatchers(WebResolver.SECURED + "/**").hasAuthority(USER)
+//                .antMatchers(WebResolver.SECURED + "/**").hasAuthority(USER)
                 .antMatchers(WebResolver.ADMIN + "/**").hasAuthority(USER)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage(WebResolver.LOGIN_REGISTER)
+                .loginProcessingUrl(WebResolver.LOGIN_REGISTER)
                 .defaultSuccessUrl(WebResolver.PROFILE)
                 .failureUrl(WebResolver.LOGIN_REGISTER + "?error=true")
 //                    .usernameParameter("email")

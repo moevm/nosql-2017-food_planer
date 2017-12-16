@@ -16,7 +16,18 @@
         <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
               th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
               rel="stylesheet" media="screen" />-->
+        <style>
+            .menu-sub:hover > ul {
+                display: inline-block;
+            }
 
+            .sub-menu {
+                position: absolute;
+                display: none;
+                background: #ccc;
+                width: 140px !important;
+            }
+        </style>
     </div>
 </head>
 <body>
@@ -34,8 +45,15 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i></a></li>
-                    <li><a href="/secure/profile" th:href="@{/secure/profile}"><i class="fa fa-user-circle"
-                                                                                  aria-hidden="true"></i></a></li>
+
+                    <li class="menu-sub"><a href="/complex_registration" th:href="@{/complex_registration}">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i></a>
+                        <ul class="sub-menu">
+                                        
+                            <li><a href="/secure/profile">Profile</a></li>
+                                     
+                        </ul>
+                    </li>
                     <li sec:authorize="isAuthenticated()">
                         <a href="/secure/logout" th:href="@{/secure/logout}" onclick="$('#form').submit();">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"> </span> Выйти </a>

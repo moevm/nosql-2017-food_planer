@@ -1,8 +1,8 @@
 package com.letiproject.foodplanner.app.service.impl;
 
-import com.letiproject.foodplanner.app.domain.Ingredient;
-import com.letiproject.foodplanner.app.domain.Recipe;
-import com.letiproject.foodplanner.app.repository.RecipeRepository;
+import com.letiproject.foodplanner.app.mongo.domain.Ingredient;
+import com.letiproject.foodplanner.app.mongo.domain.Recipe;
+import com.letiproject.foodplanner.app.mongo.repository.RecipeRepository;
 import com.letiproject.foodplanner.app.service.api.RecipeSuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -32,15 +32,15 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
     @Override
     public List<List<Recipe>> findBestSuggestion(int budgetLowBound, int budgetUpperBound,
                                                  int caloriesLowBound, int caloriesUpperBound) {
-        int budgetPerDayLowBound = budgetLowBound/7;
-        int budgetPerDayUpperBound = budgetUpperBound/7;
-        int budgetPerMealLowBound = budgetPerDayLowBound/3;
-        int budgetPerMealUpperBound = budgetPerDayUpperBound/3;
+        int budgetPerDayLowBound = budgetLowBound / 7;
+        int budgetPerDayUpperBound = budgetUpperBound / 7;
+        int budgetPerMealLowBound = budgetPerDayLowBound / 3;
+        int budgetPerMealUpperBound = budgetPerDayUpperBound / 3;
 
-        int caloriesPerDayLowBound = caloriesLowBound/7;
-        int caloriesPerDayUpperBound = caloriesUpperBound/7;
-        int caloriesPerMealLowBound = caloriesPerDayLowBound/3;
-        int caloriesPerMealUpperBound = caloriesPerDayUpperBound/3;
+        int caloriesPerDayLowBound = caloriesLowBound / 7;
+        int caloriesPerDayUpperBound = caloriesUpperBound / 7;
+        int caloriesPerMealLowBound = caloriesPerDayLowBound / 3;
+        int caloriesPerMealUpperBound = caloriesPerDayUpperBound / 3;
 
         try {
             List<Recipe> breakfastsForWeek = getAnyThreePerMeal("завтрак", budgetPerMealLowBound, budgetPerMealUpperBound,
@@ -85,7 +85,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return result;
     }
 
-    private List<Recipe> fillWeekMenuIfRecipesLessThan7 (List<Recipe> existedRecipes) {
+    private List<Recipe> fillWeekMenuIfRecipesLessThan7(List<Recipe> existedRecipes) {
         List<Recipe> filledRecipes = new ArrayList<>(7);
         int counter = 0;
         for (int i = 0; i < 7; i++) {
@@ -100,7 +100,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return filledRecipes;
     }
 
-    private List<AggregationOperation> getAggregationOperationsByMealType (String type, List<AggregationOperation> standardOperations) {
+    private List<AggregationOperation> getAggregationOperationsByMealType(String type, List<AggregationOperation> standardOperations) {
         List<AggregationOperation> resultOperations = new ArrayList<>();
         resultOperations.addAll(standardOperations);
         resultOperations.add(new MatchOperation(Criteria.where("type").is(type)));
@@ -108,9 +108,9 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return resultOperations;
     }
 
-    private List<AggregationOperation> prepareAggregationOperationsList (int budgetLowBound, int budgetUpperBound,
-                                                                         int caloriesLowBound, int caloriesUpperBound,
-                                                                         Sort.Direction sortDirection) {
+    private List<AggregationOperation> prepareAggregationOperationsList(int budgetLowBound, int budgetUpperBound,
+                                                                        int caloriesLowBound, int caloriesUpperBound,
+                                                                        Sort.Direction sortDirection) {
         List<AggregationOperation> operations = new ArrayList<>();
         operations.add(new MatchOperation(Criteria.where("calories").lte(caloriesUpperBound).gte(caloriesLowBound)));
         operations.add(new MatchOperation(Criteria.where("cost").lte(budgetUpperBound).gte(budgetLowBound)));

@@ -11,7 +11,7 @@ public class TemplateResolver {
 
     public static final String REGISTER = "registration";
     public static final String LOGIN = "login";
-    public static final String LOGIN_REGISTER = "registrationPage";
+    public static final String LOGIN_REGISTER = "complex_registration";
 
     public static final String WELCOME = "welcome";
     public static final String HOME = "home";

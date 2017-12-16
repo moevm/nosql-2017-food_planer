@@ -9,23 +9,12 @@
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" href="../../css/font-awesome.min.css">
     <link rel="stylesheet" th:href="@{/css/projectCss.css}" href="../../css/projectCss.css">
 
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">C<i class="fa fa-circle"></i><i class="fa fa-circle"></i>KING</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i></a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div th:replace="fragments/header :: header"/>
+
 
 <div id="headerwrap">
     <div class="container-fluid">
@@ -93,7 +82,7 @@
                                 <div class="tab-content tabs">
                                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
                                         <h4>Login</h4>
-                                        <form th:action="@{/login}" method="post" class="login-form">
+                                        <form th:action="@{/login_complex}" method="post" class="login-form">
                                             <div class="row">
                                                 <div class="col-lg-8 col-lg-offset-2">
                                                     <input type="email" name="email" id="email" placeholder="Email"
@@ -165,30 +154,6 @@
     </div>
 </div>
 
-<div id="contacts" class="container-fluid">
-    <div class="row centered">
-        <div class="col-lg-6 col-lg-offset-3">
-            <a href="#">Returns</a>
-            <a href="#">FAQ</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">Account</a>
-            <a href="#">Sign Up</a>
-        </div>
-        <div class="col-lg-2">
-            <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-            <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-            <a href="#"><i class="fa fa-telegram fa-lg"></i></a>
-            <a href="#"><i class="fa fa-vk fa-lg"></i></a>
-        </div>
-    </div>
-</div>
-
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script th:href="@{/js/jquery-1.12.4.js}" src="../../js/jquery-1.12.4.js"></script>
-<script th:href="@{/js/jquery-ui.js}" src="../../js/jquery-ui.js"></script>
-<script th:href="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
-<script th:href="@{/js/js.js}" src="../../js/js.js"></script>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

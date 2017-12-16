@@ -13,7 +13,7 @@ public class WebResolver {
     public static final String DENIED = "/denied";
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
-    public static final String LOGIN_REGISTER = "/login_complex";
+    public static final String LOGIN_REGISTER = "/complex_registration";
     public static final String WELCOME = "/welcome";
     public static final String MENU_FORM = "/menuForm";
     public static final String PROFILE = SECURED + "/profile";

@@ -14,7 +14,6 @@
     <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
     <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
     <a th:href="@{/menuForm}">Back to Home Page</a>
-
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>

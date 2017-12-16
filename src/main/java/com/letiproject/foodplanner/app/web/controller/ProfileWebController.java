@@ -1,6 +1,7 @@
 package com.letiproject.foodplanner.app.web.controller;
 
 import com.letiproject.foodplanner.app.postgres.model.User;
+import com.letiproject.foodplanner.app.postgres.model.type.UserType;
 import com.letiproject.foodplanner.app.service.IUserService;
 import com.letiproject.foodplanner.app.web.dto.UserDTO;
 import com.letiproject.foodplanner.app.web.util.resolvers.TemplateResolver;
@@ -38,13 +39,23 @@ public class ProfileWebController {
         ModelAndView modelAndView = new ModelAndView(TemplateResolver.PROFILE);
 
         Optional<User> user = userService.getAuthorized();
+        Optional<User> user2 = userService.save(new User(UserType.USER, "Test",
+                "test@test", "+798888888",
+                "test", "test user"));
 
         if (user.isPresent()) {
             UserDTO userDTO = ModelTranslator.toDTO(user.get());
             userDTO.setEmail(user.get().getEmail());
             modelAndView.addObject("user", userDTO);
-        } else
-            modelAndView.setViewName(TemplateResolver.redirect(TemplateResolver.HOME));
+        } else {
+            if (user2 != null) {
+                UserDTO userDTO = ModelTranslator.toDTO(user2.get());
+                userDTO.setEmail(user2.get().getEmail());
+                modelAndView.addObject("user", userDTO);
+            } else {
+                modelAndView.setViewName(TemplateResolver.redirect(TemplateResolver.MENU_FORM));
+            }
+        }
 
         return modelAndView;
     }
