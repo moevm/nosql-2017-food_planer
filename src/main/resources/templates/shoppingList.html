@@ -40,47 +40,12 @@
 
                     <div class="productList">
                         <ol>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li><li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li><li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li><li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li><li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>Lorem ipsum dolor si</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
-                            <li>onsectetur adipisicing elit</li>
+                            <th:block th:each="ingredient : ${ingredients}">
+                                <li><span th:text="${ingredient.key}"></span> - <span th:text="${ingredient.value.amount}"></span> (<span th:text="${ingredient.value.units}"></span>)</li>
+                            </th:block>
                         </ol>
                     </div>
-                    <button type="button" class="btn btn-primary btn-md" href="/menu">Назад к меню</button>
+                    <button type="button" class="btn btn-primary btn-md"><a href="/menu">Назад к меню</a></button>
                 </div>
             </div>
         </div>

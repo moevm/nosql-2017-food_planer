@@ -94,7 +94,7 @@ public class CommonController {
         List<List<Recipe>> menu = (List<List<Recipe>> )session.getAttribute("menu");
         Map<String, Ingredient.CommonIngredient> ingredientMap = suggestionService.getAggregatedIngredientsOfTheMenu(menu);
         model.put("ingredients", ingredientMap);
-        return "test";
+        return "shoppingList";
     }
 
 }
