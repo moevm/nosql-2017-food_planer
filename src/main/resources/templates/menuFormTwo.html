@@ -1,14 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <div th:replace="fragments/header :: header-css"/>
-
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/projectCss.css}" href="../../css/projectCss.css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" href="../../css/jquery-ui.css">
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">C<i class="fa fa-circle"></i><i class="fa fa-circle"></i>KING</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <div id="headerwrap">
     <div class="container-fluid">
@@ -64,7 +81,7 @@
                     <div class="row centered">
                         <div class="col-lg-8 col-lg-offset-2">
                             <div class="yak">
-                                <a href="#menu"><i class="fa fa-arrow-right" aria-hidden="true"></i>Drawing up the menu</a>
+                                <a href="#menu"><i class="fa fa-arrow-right" aria-hidden="true"></i>Мы подобрали для вас меню! Приятного аппетита!</a>
                             </div>
                         </div>
                     </div>
@@ -80,47 +97,69 @@
         <div class="row centered">
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="menu" id="menu">
-                    <h4>We will help you</h4>
+                    <h4>Меню</h4>
+                    <div class="back">
+                        <button type="button" class="btn btn-primary btn-md" ><a href="/menu/ingredients">Ингредиенты</a></button>
+
+                        <button type="button" class="btn btn-primary btn-md" href="/"><a href="/">Назад на главную страницу</a></button>
+                        <!--<a href="/">Назад на главную страницу</a>-->
+                    </div>
+                    <div class="summary">
+                        <div class="point">
+                            Всего калорий: <span th:text="${session.totalCalories}"></span> кКал
+                        </div>
+                        <div class="point">
+                            Общая стоимость: <span th:text="${session.totalCost}"></span> Рублей
+                        </div>
+                    </div>
                     <div class="choice">
                         <div id="days">
                             <div class="panel-group" id="accordion">
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[0][0].calories}"></span> калорий за <span th:text="${session.menu[0][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[0][1].calories}"></span> калорий за <span th:text="${session.menu[0][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[0][2].calories}"></span> калорий за <span th:text="${session.menu[0][2].cost}"></span> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                                Monday</a>
+                                                Понедельник</a>
                                         </h4>
                                     </div>
-                                    <div id="collapse1" class="panel-collapse collapse in" th:if="${menu.size()}!=0">
+                                    <div id="collapse1" class="panel-collapse collapse in">
                                         <div class="panel-body">
                                             <div class="monday">
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/1}"
-                                                               th:text="${menu[0][0].name}"></a>
+                                                            <a class="text" th:href="@{/menu/breakfast/1}" th:text="${session.menu[0][0].name}"></a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/1}"
-                                                               th:text="${menu[0][1].name}"></a>
+                                                            <a class="text" th:href="@{/menu/lunch/1}" th:text="${session.menu[0][1].name}"></a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/1}"
-                                                               th:text="${menu[0][2].name}"></a>
+                                                            <a class="text" th:href="@{/menu/dinner/1}" th:text="${session.menu[0][2].name}"></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,6 +169,17 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[1][0].calories}"></span> калорий за <span th:text="${session.menu[1][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[1][1].calories}"></span> калорий за <span th:text="${session.menu[1][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[1][2].calories}"></span> калорий за <span th:text="${session.menu[1][2].cost}"></span> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
@@ -142,30 +192,27 @@
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/2}"
-                                                               th:text="${menu[1][0].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/breakfast/2}" th:text="${session.menu[1][0].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/2}"
-                                                               th:text="${menu[1][1].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/lunch/2}" th:text="${session.menu[1][1].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/2}"
-                                                               th:text="${menu[1][2].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/dinner/2}" th:text="${session.menu[1][2].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -175,6 +222,17 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[2][0].calories}"></span> калорий за <span th:text="${session.menu[2][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[2][1].calories}"></span> калорий за <span th:text="${session.menu[2][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[2][2].calories}"></span> калорий за <span th:text="${session.menu[2][2].cost}"> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
@@ -187,30 +245,27 @@
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/3}"
-                                                               th:text="${menu[2][0].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/breakfast/3}" th:text="${session.menu[2][0].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/3}"
-                                                               th:text="${menu[2][1].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/lunch/3}" th:text="${session.menu[2][1].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/3}"
-                                                               th:text="${menu[2][2].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/dinner/3}" th:text="${session.menu[2][2].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -221,6 +276,17 @@
                                 </div>
 
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[3][0].calories}"></span> калорий за <span th:text="${session.menu[3][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[3][1].calories}"></span> калорий за <span th:text="${session.menu[3][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[3][2].calories}"></span> калорий за <span th:text="${session.menu[3][2].cost}"></span> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
@@ -233,30 +299,27 @@
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/4}"
-                                                               th:text="${menu[3][0].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/breakfast/4}" th:text="${session.menu[3][0].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/4}"
-                                                               th:text="${menu[3][1].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/lunch/4}" th:text="${session.menu[3][1].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/4}"
-                                                               th:text="${menu[3][2].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/dinner/4}" th:text="${session.menu[3][2].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -267,6 +330,17 @@
                                 </div>
 
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[4][0].calories}"></span> калорий за <span th:text="${session.menu[4][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[4][1].calories}"></span> калорий за <span th:text="${session.menu[4][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[4][2].calories}"></span> калорий за <span th:text="${session.menu[4][2].cost}"></span> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
@@ -279,30 +353,27 @@
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/5}"
-                                                               th:text="${menu[4][0].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/breakfast/5}" th:text="${session.menu[4][0].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/5}"
-                                                               th:text="${menu[4][1].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/lunch/5}" th:text="${session.menu[4][1].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/5}"
-                                                               th:text="${menu[4][2].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/dinner/5}" th:text="${session.menu[4][2].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -313,6 +384,17 @@
                                 </div>
 
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[5][0].calories}"></span> калорий за <span th:text="${session.menu[5][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[5][1].calories}"></span> калорий за <span th:text="${session.menu[5][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[5][2].calories}"></span> калорий за <span th:text="${session.menu[5][2].cost}"></span> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
@@ -325,30 +407,27 @@
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/6}"
-                                                               th:text="${menu[5][0].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/breakfast/6}" th:text="${session.menu[5][0].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/6}"
-                                                               th:text="${menu[5][1].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/lunch/6}" th:text="${session.menu[5][1].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/6}"
-                                                               th:text="${menu[5][2].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/dinner/6}" th:text="${session.menu[5][2].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -359,6 +438,17 @@
                                 </div>
 
                                 <div class="panel panel-default">
+                                    <div class="info">
+                                        <div class="topic">
+                                            Завтрак: <span th:text="${session.menu[6][0].calories}"></span> калорий за <span th:text="${session.menu[6][0].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Обед: <span th:text="${session.menu[6][1].calories}"></span> калорий за <span th:text="${session.menu[6][1].cost}"></span> рублей.
+                                        </div>
+                                        <div class="topic">
+                                            Ужин: <span th:text="${session.menu[6][2].calories}"></span> калорий за <span th:text="${session.menu[6][2].cost}"></span> рублей.
+                                        </div>
+                                    </div>
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
@@ -371,30 +461,27 @@
 
                                                 <div class="breakfast">
                                                     <div class="container">
-                                                        <img th:src="@{image/Breakfast.png}" alt="Avatar" class="image">
+                                                        <img src="image/Breakfast.png" alt="Avatar" class="image">
                                                         <div class="overlay">
-                                                            <a class="text" th:href="@{/menu/breakfast/7}"
-                                                               th:text="${menu[6][0].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/breakfast/7}" th:text="${session.menu[6][0].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="lunch">
                                                     <div class="container">
-                                                        <img th:src="@{image/Lunch.png}" alt="Avatar" class="image">
+                                                        <img src="image/Lunch.png" alt="Avatar" class="image">
                                                         <div class="overlay1">
-                                                            <a class="text" th:href="@{/menu/lunch/7}"
-                                                               th:text="${menu[6][1].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/lunch/7}" th:text="${session.menu[6][1].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="dinner">
                                                     <div class="container">
-                                                        <img th:src="@{image/Dinner.png}" alt="Avatar" class="image">
+                                                        <img src="image/Dinner.png" alt="Avatar" class="image">
                                                         <div class="overlay2">
-                                                            <a class="text" th:href="@{/menu/dinner/7}"
-                                                               th:text="${menu[6][2].name}">Hello world</a>
+                                                            <a class="text" th:href="@{/menu/dinner/7}" th:text="${session.menu[6][2].name}">Hello world</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -413,8 +500,31 @@
         </div>
     </div>
 </div>
+<div id="contacts" class="container-fluid">
+    <div class="row centered">
+        <div class="col-lg-6 col-lg-offset-3">
+            <a href="#">Returns</a>
+            <a href="#">FAQ</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Account</a>
+            <a href="#">Sign Up</a>
+        </div>
+        <div class="col-lg-2">
+            <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+            <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+            <a href="#"><i class="fa fa-telegram fa-lg"></i></a>
+            <a href="#"><i class="fa fa-vk fa-lg"></i></a>
+        </div>
+    </div>
+</div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
 
+<script th:href="@{/js/jquery-1.12.4.js}" src="../../js/jquery-1.12.4.js"></script>
+<script th:href="@{/js/jquery-ui.js}" src="../../js/jquery-ui.js"></script>
+<script th:href="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
+<script th:href="@{/js/js.js}" src="../../js/js.js"></script>
 </body>
 </html>
