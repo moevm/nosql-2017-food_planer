@@ -1,5 +1,6 @@
 package com.letiproject.foodplanner.app.service.impl;
 
+import com.letiproject.foodplanner.app.domain.Ingredient;
 import com.letiproject.foodplanner.app.domain.Recipe;
 import com.letiproject.foodplanner.app.repository.RecipeRepository;
 import com.letiproject.foodplanner.app.service.api.RecipeSuggestionService;
@@ -11,7 +12,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
@@ -133,6 +136,25 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
             }
         }
         return totalCalories;
+    }
+
+    @Override
+    public Map<String, Ingredient.CommonIngredient> getAggregatedIngredientsOfTheMenu(List<List<Recipe>> menu) {
+        Map<String, Ingredient.CommonIngredient> ingredients = new HashMap<>();
+        for (List<Recipe> dailyMenu : menu) {
+            for (Recipe meal : dailyMenu) {
+                for (Ingredient ingredient : meal.getIngredients()) {
+                    if (ingredients.containsKey(ingredient.getName().toLowerCase())) {
+                        Ingredient.CommonIngredient tmpIngredient = ingredients.get(ingredient.getName().toLowerCase());
+                        tmpIngredient.setAmount(tmpIngredient.getAmount() + ingredient.getAmount());
+                    } else {
+                        ingredients.put(ingredient.getName().toLowerCase(),
+                                new Ingredient.CommonIngredient(ingredient.getAmount(), ingredient.getUnits()));
+                    }
+                }
+            }
+        }
+        return ingredients;
     }
 
 

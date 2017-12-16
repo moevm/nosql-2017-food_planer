@@ -1,5 +1,6 @@
 package com.letiproject.foodplanner.app.controller;
 
+import com.letiproject.foodplanner.app.domain.Ingredient;
 import com.letiproject.foodplanner.app.domain.Recipe;
 import com.letiproject.foodplanner.app.repository.RecipeRepository;
 import com.letiproject.foodplanner.app.service.api.RecipeSuggestionService;
@@ -69,6 +70,7 @@ public class CommonController {
     }
 
     @RequestMapping(value = "/menu/{type}/{id}")
+    @SuppressWarnings("unchecked")
     public String returnRecipeByTypeAndId(HttpSession session,
                                           Map<String, Object> model,
                                           @PathVariable(name = "type") String type,
@@ -84,6 +86,15 @@ public class CommonController {
         model.put("recipe", currentRecipe);
 
         return "recipes";
+    }
+
+    @RequestMapping(value = "/menu/ingredients")
+    @SuppressWarnings("unchecked")
+    public String ingredientsPage(HttpSession session, Map<String, Object> model) {
+        List<List<Recipe>> menu = (List<List<Recipe>> )session.getAttribute("menu");
+        Map<String, Ingredient.CommonIngredient> ingredientMap = suggestionService.getAggregatedIngredientsOfTheMenu(menu);
+        model.put("ingredients", ingredientMap);
+        return "test";
     }
 
 }
