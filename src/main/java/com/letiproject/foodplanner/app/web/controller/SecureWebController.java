@@ -64,6 +64,18 @@ public class SecureWebController {
         session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
     }
 
+    @RequestMapping(value = WebResolver.LOGIN_REGISTER, method = RequestMethod.GET)
+    public ModelAndView loginGetComplex() {
+
+        ModelAndView modelAndView = new ModelAndView(TemplateResolver.LOGIN_REGISTER);
+
+        modelAndView.addObject("user", new UserFormDTO());
+
+        return modelAndView;
+    }
+
+
+
     @RequestMapping(value = WebResolver.LOGIN, method = RequestMethod.GET)
     public ModelAndView loginGet() {
         return new ModelAndView(TemplateResolver.LOGIN);
@@ -71,7 +83,7 @@ public class SecureWebController {
 
     @RequestMapping(value = WebResolver.LOGOUT, method = RequestMethod.GET)
     public ModelAndView logoutGet(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView modelAndView = new ModelAndView(TemplateResolver.redirect(TemplateResolver.LOGIN + "?logout=true"));
+        ModelAndView modelAndView = new ModelAndView(TemplateResolver.redirect(TemplateResolver.LOGIN_REGISTER + "?logout=true"));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null)
@@ -96,7 +108,7 @@ public class SecureWebController {
         if (userService.existsByEmail(user.getEmail())) {
             bindingResult.rejectValue("email", "error.user",
                     "There is already a user registered with the email provided");
-            modelAndView.setViewName(TemplateResolver.REGISTER);
+            modelAndView.setViewName(TemplateResolver.LOGIN_REGISTER);
         }
 
         if (!bindingResult.hasErrors()) {
@@ -112,7 +124,7 @@ public class SecureWebController {
                 modelAndView.addObject("message", "Error");
             }
         } else {
-            return new ModelAndView(TemplateResolver.redirect(WebResolver.REGISTER));
+            return new ModelAndView(TemplateResolver.redirect(WebResolver.LOGIN_REGISTER));
         }
 
         return modelAndView;

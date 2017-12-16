@@ -28,10 +28,10 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
 
     @Override
     public List<List<Recipe>> findBestSuggestion(int budget, int caloriesLimit) {
-        int budgetPerDay = budget/7;
-        int budgetPerMeal = budgetPerDay/3;
-        int caloriesPerDay = caloriesLimit/7;
-        int caloriesPerMeal = caloriesPerDay/3;
+        int budgetPerDay = budget / 7;
+        int budgetPerMeal = budgetPerDay / 3;
+        int caloriesPerDay = caloriesLimit / 7;
+        int caloriesPerMeal = caloriesPerDay / 3;
 
 
         List<Recipe> breakfastsForWeek = getAnyThreePerMeal("завтрак", budgetPerMeal, caloriesPerMeal);
@@ -77,7 +77,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return result;
     }
 
-    private List<Recipe> fillWeekMenuIfRecipesLessThan7 (List<Recipe> existedRecipes) {
+    private List<Recipe> fillWeekMenuIfRecipesLessThan7(List<Recipe> existedRecipes) {
         List<Recipe> filledRecipes = new ArrayList<>(7);
         int counter = 0;
         for (int i = 0; i < 7; i++) {
@@ -92,7 +92,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return filledRecipes;
     }
 
-    private List<AggregationOperation> getAggregationOperationsByMealType (String type, List<AggregationOperation> standartOperations) {
+    private List<AggregationOperation> getAggregationOperationsByMealType(String type, List<AggregationOperation> standartOperations) {
         List<AggregationOperation> resultOperations = new ArrayList<>();
         resultOperations.addAll(standartOperations);
         resultOperations.add(new MatchOperation(Criteria.where("type").is(type)));
@@ -100,7 +100,7 @@ public class RecipeSuggestionServiceImpl implements RecipeSuggestionService {
         return resultOperations;
     }
 
-    private List<AggregationOperation> prepareAggregationOperationsList (int budget, int calories, Sort.Direction sortDirection, boolean isUpperLimit) {
+    private List<AggregationOperation> prepareAggregationOperationsList(int budget, int calories, Sort.Direction sortDirection, boolean isUpperLimit) {
         List<AggregationOperation> operations = new ArrayList<>();
         if (isUpperLimit) {
             operations.add(new MatchOperation(Criteria.where("calories").lte(calories)));

@@ -93,7 +93,7 @@
                                 <div class="tab-content tabs">
                                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
                                         <h4>Login</h4>
-                                        <form action="/login" method="post" class="login-form">
+                                        <form th:action="@{/login}" method="post" class="login-form">
                                             <div class="row">
                                                 <div class="col-lg-8 col-lg-offset-2">
                                                     <input type="email" name="email" id="email" placeholder="Email"
@@ -117,16 +117,25 @@
                                     <!--<div class="sign-up">Don't have account yet? <a href="#">Sign Up</a></div>-->
                                     <div role="tabpanel" class="tab-pane fade" id="Section2">
                                         <h4>Registration</h4>
-                                        <form action="/login" method="post" class="login-form">
+                                        <form th:action="@{/register}"
+                                              th:object="${user}" method="post" class="login-form">
                                             <div class="row">
                                                 <div class="col-lg-8 col-lg-offset-2">
-                                                    <input type="email" name="email" id="email1" placeholder="Email"
+                                                    <input type="name" name="name" id="name" th:field="*{name}"
+                                                           placeholder="Name">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-8 col-lg-offset-2">
+                                                    <input type="email" name="email" id="email1" th:field="*{email}"
+                                                           placeholder="Email"
                                                            required>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-8 col-lg-offset-2">
                                                     <input type="password" name="password" id="password1"
+                                                           th:field="*{password}"
                                                            placeholder="Choose password" required>
                                                 </div>
                                             </div>
